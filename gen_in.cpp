@@ -11,10 +11,10 @@ struct Test
     vector<ll> positions;
 };
 
-Test get_random_test(ll max_n, ll type_count, ll max_pos)
+Test get_const_sizes_test(ll n, ll type_count, ll max_pos)
 {
     Test result;
-    result.n = rng() % max_n + 1;
+    result.n = n;
     result.types = vector<ll>(result.n);
     result.positions = vector<ll>(result.n);
 
@@ -26,6 +26,14 @@ Test get_random_test(ll max_n, ll type_count, ll max_pos)
 
     sort(result.positions.begin(), result.positions.end());
     return result;
+}
+
+Test get_random_test(ll max_n, ll max_type_count, ll max_max_pos)
+{
+    ll n = rng() % max_n + 1;
+    ll type_count = rng() % max_type_count + 1;
+    ll max_pos = rng() % (max_max_pos + 1);
+    return get_const_sizes_test(n, type_count, max_pos);
 }
 
 void check_test(const Test& test)
@@ -48,6 +56,7 @@ void check_test(const Test& test)
 
 void write_test(const Test& test, const string& group, int index)
 {
+    check_test(test);
     auto file = ofstream(group + "/" + to_string(index) + ".in");
     file << test.n << "\n";
 
@@ -64,20 +73,24 @@ int main()
     for (int i = 1; i < 10000;)
     {
         write_test(get_random_test(5, 5, 5), "tiny", i++);
+        write_test(get_const_sizes_test(5, 5, 5), "tiny", i++);
     }
 
     for (int i = 1; i < 1000;)
     {
         write_test(get_random_test(100, 100, 100), "small", i++);
+        write_test(get_const_sizes_test(100, 100, 100), "small", i++);
     }
 
     for (int i = 1; i < 1000;)
     {
         write_test(get_random_test(1000, 1000, 1000), "medium", i++);
+        write_test(get_const_sizes_test(1000, 1000, 1000), "medium", i++);
     }
 
     for (int i = 1; i < 100;)
     {
         write_test(get_random_test(1000000, INT_MAX, INT_MAX), "big", i++);
+        write_test(get_const_sizes_test(1000000, INT_MAX, INT_MAX), "big", i++);
     }
 }
