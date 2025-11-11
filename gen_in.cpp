@@ -36,6 +36,19 @@ Test get_random_test(ll max_n, ll max_type_count, ll max_max_pos)
     return get_const_sizes_test(n, type_count, max_pos);
 }
 
+Test get_max_type_pos_test(ll n)
+{
+    Test result = get_const_sizes_test(n, 10, 10);
+
+    for (int i = 0; i < result.n; i++)
+    {
+        result.types[i] += INT_MAX - 10;
+        result.positions[i] += INT_MAX - 10;
+    }
+
+    return result;
+}
+
 void check_test(const Test& test)
 {
     assert(1 <= test.n && test.n <= 1000'000);
@@ -80,17 +93,22 @@ int main()
     {
         write_test(get_random_test(100, 100, 100), "small", i++);
         write_test(get_const_sizes_test(100, 100, 100), "small", i++);
+        write_test(get_max_type_pos_test(100), "small", i++);
     }
 
     for (int i = 1; i < 1000;)
     {
         write_test(get_random_test(1000, 1000, 1000), "medium", i++);
         write_test(get_const_sizes_test(1000, 1000, 1000), "medium", i++);
+        write_test(get_max_type_pos_test(1000), "medium", i++);
     }
 
     for (int i = 1; i < 100;)
     {
+        write_test(get_random_test(1000000, 5, 5), "big", i++);
+        write_test(get_random_test(1000000, 5, INT_MAX), "big", i++);
         write_test(get_random_test(1000000, INT_MAX, INT_MAX), "big", i++);
         write_test(get_const_sizes_test(1000000, INT_MAX, INT_MAX), "big", i++);
+        write_test(get_max_type_pos_test(1000000), "big", i++);
     }
 }
