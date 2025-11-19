@@ -89,7 +89,7 @@ int main()
         write_test(get_const_sizes_test(5, 5, 5), "tiny", i++);
     }
 
-    for (int i = 1; i < 1000;)
+    for (int i = 1; i < 10000;)
     {
         write_test(get_random_test(100, 100, 100), "small", i++);
         write_test(get_const_sizes_test(100, 100, 100), "small", i++);
